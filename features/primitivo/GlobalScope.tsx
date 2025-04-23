@@ -1,0 +1,2 @@
+
+const activeSession = new ActiveSession();

@@ -1,0 +1,3 @@
+class ActiveSession {
+    onboardingPassed = false
+}
