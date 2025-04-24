@@ -3,11 +3,25 @@ import { Link } from 'expo-router';
 import ButtonRightArrow from "@/features/common_ui/ButtonRightArrow";
 import LineDivider from "@/features/common_ui/LineDivider";
 import { AppScreenContainer } from "@/features/common_ui/AppScreenContainer";
+import HttpClient from "@/features/network/HttpClient";
+import { AppUrl } from "@/features/network/Urls";
 
 export default function LoginScreen() {
 
   let email = "";
   let password = "";
+
+  const doLoginRequest = () => {
+    let postBody = {
+      "email": "ghjvfx@gmail.com",
+      "password": "789789"
+    };
+    new HttpClient().postRequest(
+      AppUrl.login,
+      postBody,
+      (data) => { console.log(data); }
+    )
+  }
 
 
   return (
@@ -40,7 +54,9 @@ export default function LoginScreen() {
       <ButtonRightArrow
         text="Log in"
         type="black"
-        onPressCallback={() => { alert(email); }}
+        onPressCallback={() => {
+          doLoginRequest()
+        }}
       />
       <View style={{ flex: 1, flexDirection: "row", alignSelf: "center" }}>
         <Text style={{ flex: 1 }}>
@@ -68,7 +84,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#FDEBF6',
     padding: 10,
     height: '100%'
-    // alignItems: "center"
   },
   text_input: {
     width: '100%',

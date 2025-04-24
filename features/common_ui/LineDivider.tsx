@@ -8,8 +8,8 @@ const LineDivider = () => {
             <Rect x={0} y={0} width={"100%"} height={"100%"} fill={'url(#grad1)'} />
             <defs>
                 <linearGradient id="grad1" x1="0%" x2="100%" y1="0%" y2="0%">
-                    <stop offset="0%" stop-color="yellow" />
-                    <stop offset="100%" stop-color="red" />
+                    <stop offset="0%" stopColor="yellow" />
+                    <stop offset="100%" stopColor="red" />
                 </linearGradient>
             </defs>
         </Svg>
