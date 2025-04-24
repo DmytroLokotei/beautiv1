@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, Image, TextInput } from "react-native";
 import { Link } from 'expo-router';
 import ButtonRightArrow from "@/features/common_ui/ButtonRightArrow";
@@ -5,16 +6,21 @@ import LineDivider from "@/features/common_ui/LineDivider";
 import { AppScreenContainer } from "@/features/common_ui/AppScreenContainer";
 import HttpClient from "@/features/network/HttpClient";
 import { AppUrl } from "@/features/network/Urls";
+import isValidEmail from "@/features/validation/emailValidation";
 
 export default function LoginScreen() {
+  const [getEmail, setEmail] = useState("");
+  const [getPassword, setPassword] = useState("");
+  const [isEmailError, setIsEmailError] = useState(false);
 
-  let email = "";
-  let password = "";
+  useEffect(() => {
+    setIsEmailError(!isValidEmail(getEmail))
+  }, [getEmail]);
 
   const doLoginRequest = () => {
     let postBody = {
-      "email": "ghjvfx@gmail.com",
-      "password": "789789"
+      "email": getEmail,
+      "password": getPassword
     };
     new HttpClient().postRequest(
       AppUrl.login,
@@ -41,13 +47,17 @@ export default function LoginScreen() {
       <TextInput
         autoComplete="email"
         placeholder="email"
-        onChangeText={(value) => { email = value }}
-        style={[styles.text_input, { marginBottom: 8 }]}
+        onChangeText={(value) => { setEmail(value) }}
+        style={[
+          styles.text_input,
+          { marginBottom: 8 },
+          isEmailError && { borderColor: 'red' }
+        ]}
       />
       <TextInput
         autoComplete="password"
         placeholder="password"
-        onChangeText={(value) => { password = value }}
+        onChangeText={(value) => { setPassword(value) }}
         style={[styles.text_input, { marginBottom: 8 }]}
       />
       <Link href="/RegistrationScreen">Fogrot password?</Link>
@@ -89,6 +99,8 @@ const styles = StyleSheet.create({
     width: '100%',
     backgroundColor: '#FFF',
     padding: 5,
-    borderRadius: 14
+    borderRadius: 14,
+    borderWidth: 1,
+    borderColor: "#FFF"
   }
 });
