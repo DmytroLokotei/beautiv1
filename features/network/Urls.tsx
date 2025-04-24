@@ -5,7 +5,7 @@ export type AppUrls = {
 
 export const AppUrl = {
     domain: {
-        value: 'https://emcell-back.dev-devocean.pro'
+        value: 'https://beauty.dev-devocean.pro'
     },
     login: {
         value: '/api/login'

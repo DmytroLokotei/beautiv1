@@ -7,6 +7,7 @@ import { AppScreenContainer } from "@/features/common_ui/AppScreenContainer";
 import HttpClient from "@/features/network/HttpClient";
 import { AppUrl } from "@/features/network/Urls";
 import isValidEmail from "@/features/validation/emailValidation";
+import { handleLoginResponse } from '@/features/auth/loginUseCase';
 
 export default function LoginScreen() {
   const [getEmail, setEmail] = useState("");
@@ -25,7 +26,10 @@ export default function LoginScreen() {
     new HttpClient().postRequest(
       AppUrl.login,
       postBody,
-      (data) => { console.log(data); }
+      (data) => {
+        const root = JSON.parse(data);
+        handleLoginResponse(root);
+      }
     )
   }
 

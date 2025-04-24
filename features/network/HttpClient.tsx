@@ -45,7 +45,7 @@ class HttpClient {
     postRequest(
         url: AppUrls,
         data: object,
-        dataCallback: (data: object) => void
+        dataCallback: (data: string) => void
     ) {
         this.axios.post(
             url.value,
