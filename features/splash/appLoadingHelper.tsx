@@ -14,7 +14,7 @@ export function EmitWhenAllDependenciesLoaded(onAllLoaded: () => void) {
     let [userSessionRestored, setUserSessionRestored] = useState(false)
     useEffect(() => {
         const restorer = new SessionFileStorage()
-        console.log("restoreAll");
+        console.log("SessionFileStorage.restoreAll");
         restorer.restoreAll().then(() => {
             setUserSessionRestored(true)
         })
@@ -23,11 +23,9 @@ export function EmitWhenAllDependenciesLoaded(onAllLoaded: () => void) {
     //listen computed value
     useEffect(() => {
         if (fontsLoaded && userSessionRestored) {
-            console.log("onAllLoaded");
+            console.log("EmitWhenAllDependenciesLoaded.onAllLoaded");
             onAllLoaded()
         }
     }, [fontsLoaded, userSessionRestored]);
-
-    console.log("EmitWhenAllDependenciesLoaded");
 
 }

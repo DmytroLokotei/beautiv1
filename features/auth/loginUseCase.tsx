@@ -5,7 +5,7 @@ import SessionFileStorage from "../session/SessionFileStorage";
 export function handleLoginResponse(root: LoginJsonResponse | ErrorLoginJsonResponse) {
     const errors = (root as ErrorLoginJsonResponse).errors;
     if (errors != null) {
-        // handle errors
+        // TODO: handle errors on UI
         alert(JSON.stringify(errors));
         return
     }

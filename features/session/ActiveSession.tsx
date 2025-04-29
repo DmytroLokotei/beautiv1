@@ -1,4 +1,3 @@
-import SessionFileStorage from "./SessionFileStorage"
 
 export class ActiveSession {
     onboardingPassed = false

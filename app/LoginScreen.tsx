@@ -81,7 +81,7 @@ export default function LoginScreen() {
         </View>
       </View>
       <View style={{ flex: 1 }} />
-      <LineDivider />
+      <LineDivider type='gradient' />
       <View style={{ flexDirection: "row", alignSelf: "center" }}>
         <Text style={{ flex: 1, marginEnd: 8 }}>
           Don`t have an account?
