@@ -1,6 +1,9 @@
 import { getActiveSession, UserData } from "../session/ActiveSession";
 import { router } from 'expo-router';
 import SessionFileStorage from "../session/SessionFileStorage";
+import HttpClient from "../network/HttpClient";
+import { handleUserInfoResponse } from "./userInfoUseCase";
+import { AppUrl } from "../network/Urls";
 
 export function handleLoginResponse(root: LoginJsonResponse | ErrorLoginJsonResponse) {
     const errors = (root as ErrorLoginJsonResponse).errors;
@@ -17,8 +20,21 @@ export function handleLoginResponse(root: LoginJsonResponse | ErrorLoginJsonResp
     session.userData.email = responce.data.email;
     session.userData.role = responce.data.role;
 
-    new SessionFileStorage().saveUserData()
+    new SessionFileStorage().saveUserData();
+    HttpClient.updateToken(responce.auth_token);
 
+    // update data non-bloking
+    new HttpClient().getRequest(
+        AppUrl.userInfo,
+        (responce) => {
+            if (responce.status == 200) {
+                const root = JSON.parse(responce.data);
+                handleUserInfoResponse(root);
+            }
+        }
+    )
+
+    // redirect to profile screen as user successfully logged in
     router.replace('/(tabs)/profile');
 }
 

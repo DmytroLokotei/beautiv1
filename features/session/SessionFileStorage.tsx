@@ -20,16 +20,13 @@ export default class SessionFileStorage {
             const jsonString = await AsyncStorage.getItem(this.USER_DATA_STORAGE_KEY);
             const lastData: UserData = jsonString != null ? JSON.parse(jsonString) : null;
             if (lastData == null) {
-                console.log('restoreUserData not have any')
                 // not have any
                 return data
             }
             getActiveSession().userData = lastData
-            console.log('restoreUserData HAS previous user data')
             return lastData
         } catch (e) {
             // no previous user data
-            console.log('restoreUserData no previous user data')
         }
         return data
     }

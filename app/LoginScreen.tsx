@@ -26,9 +26,11 @@ export default function LoginScreen() {
     new HttpClient().postRequest(
       AppUrl.login,
       postBody,
-      (data) => {
-        const root = JSON.parse(data);
-        handleLoginResponse(root);
+      (responce) => {
+        if (responce.status == 200) {
+          const root = JSON.parse(responce.data);
+          handleLoginResponse(root);
+        }
       }
     )
   }

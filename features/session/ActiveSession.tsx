@@ -4,7 +4,7 @@ export class ActiveSession {
     userData: UserData | null = null
 }
 
-var _currentSession: ActiveSession | null = null
+var _currentSession: ActiveSession | null = null; // private static
 
 export function getActiveSession(): ActiveSession {
     if (_currentSession == null) {
@@ -18,4 +18,13 @@ export class UserData {
     id: number = 0
     email: string = ""
     role: string = ""
+    meta: UserMeta = new UserMeta()
+}
+
+export class UserMeta {
+    firstName: string = ""
+    lastName: string = ""
+    phoneNumber: string = ""
+    age: number = 0
+    gender: string = ""
 }
