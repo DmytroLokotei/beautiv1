@@ -2,6 +2,7 @@ import { router, Stack } from "expo-router";
 import { useEffect, useState } from 'react';
 import { EmitWhenAllDependenciesLoaded } from "@/features/splash/appLoadingHelper";
 import { getActiveSession } from "@/features/session/ActiveSession";
+import { tokenSync } from '@/features/auth/tokenExpireUseCase';
 
 export default function RootLayout() {
 
@@ -11,10 +12,16 @@ export default function RootLayout() {
   useEffect(() => {
     if (allLoaded) {
       // redirect user to corresponding screen 
-      console.log("getActiveSession:");
-      console.log(getActiveSession());
       if (getActiveSession().userData?.authToken != null) {
-        router.replace("/(tabs)/profile");
+        // check if not expired 
+        tokenSync().then((isNotExpired) => {
+          if (isNotExpired) {
+            router.replace("/(tabs)/profile");
+          } else {
+            router.replace("/LoginScreen");
+          }
+        })
+
       }
     }
   }, [allLoaded]);
@@ -25,6 +32,7 @@ export default function RootLayout() {
       <Stack.Screen name="LoginScreen" />
       <Stack.Screen name="RegistrationScreen" />
       <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="salon" />
     </Stack>
   );
 }
